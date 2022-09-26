@@ -1,6 +1,6 @@
 const { database } = require("./database");
 
-const getList = async (startPageNo, limit) => {
+const getList = async (startPageNo, limit, adminPkId) => {
   return database.query(
     `
     SELECT 
@@ -16,11 +16,12 @@ const getList = async (startPageNo, limit) => {
     ON survey_status_id = survey_status.id
     LEFT JOIN opinion 
     ON survey.id = opinion.survey_id
+    WHERE survey.admin_id = ?
     GROUP BY survey.id
     ORDER BY survey_status_id
     LIMIT ?, ?
     `,
-    [startPageNo, limit]
+    [adminPkId, startPageNo, limit]
   );
 };
 
