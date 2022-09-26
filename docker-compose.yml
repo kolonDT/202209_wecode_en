@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    volumes: 
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=koda_test
+    ports: 
+      - 3000:3306
+
+  # app:
+  #   build:
+  #     context: . 
+  #     dockerfile: ./Dockerfile
+  #   environment: 
+  #     -DB_HOST=
