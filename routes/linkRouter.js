@@ -1,13 +1,11 @@
 const express = require("express");
-const mainController = require("../controllers/mainController");
+const linkController = require("../controllers/linkController");
 const errorHandler = require("../middlewares/errorHandler");
 const { validateToken } = require("../middlewares/auth.js");
 
 const router = express.Router();
 
-router.get("/count", validateToken, errorHandler(mainController.getCount));
-
-router.get("/list", validateToken, errorHandler(mainController.getList));
+router.get("/", validateToken, errorHandler(linkController.getLink));
 
 module.exports = {
   router,

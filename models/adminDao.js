@@ -1,7 +1,7 @@
 const { database } = require("./database");
 
 const checkAdminId = async (adminId) => {
-  return database.query(
+  return await database.query(
     `
     SELECT EXISTS(
       SELECT 
@@ -14,7 +14,7 @@ const checkAdminId = async (adminId) => {
 };
 
 const checkPassword = async (adminPassword) => {
-  return database.query(
+  return await database.query(
     `
     SELECT EXISTS(
       SELECT 
@@ -27,7 +27,7 @@ const checkPassword = async (adminPassword) => {
 };
 
 const getPkId = async (adminId) => {
-  return database.query(
+  return await database.query(
     `
     SELECT 
       id

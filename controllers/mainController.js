@@ -1,6 +1,12 @@
 const mainService = require("../services/mainService");
 const error = require("../middlewares/errorConstructor");
 
+const getCount = async (req, res) => {
+  const adminPkId = req.decoded.id;
+  const mainPageCount = await mainService.getCount(adminPkId);
+  res.status(200).json({ mainPageCount });
+};
+
 const getList = async (req, res) => {
   const adminPkId = req.decoded.id;
   const pageNo = Number(req.query.pageNo);
@@ -13,5 +19,6 @@ const getList = async (req, res) => {
 };
 
 module.exports = {
+  getCount,
   getList,
 };

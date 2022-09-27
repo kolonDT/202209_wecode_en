@@ -1,7 +1,18 @@
 const { database } = require("./database");
 
+const getCount = async (adminPkId) => {
+  return await database.query(
+    `
+    SELECT 
+      COUNT(id) AS surveycount
+    FROM survey
+    WHERE survey.admin_id = ?`,
+    [adminPkId]
+  );
+};
+
 const getList = async (startPageNo, limit, adminPkId) => {
-  return database.query(
+  return await database.query(
     `
     SELECT 
       survey.id,
@@ -9,8 +20,7 @@ const getList = async (startPageNo, limit, adminPkId) => {
       status,
       DATE_FORMAT(start_date, '%Y-%c-%e') AS start_date,
       DATE_FORMAT(end_date, '%Y-%c-%e') AS end_date,
-      COUNT(opinion.id) AS count,
-      (SELECT COUNT(id) FROM survey) AS surveycount
+      COUNT(opinion.id) AS count
     FROM survey
     INNER JOIN survey_status 
     ON survey_status_id = survey_status.id
@@ -19,12 +29,12 @@ const getList = async (startPageNo, limit, adminPkId) => {
     WHERE survey.admin_id = ?
     GROUP BY survey.id
     ORDER BY survey_status_id
-    LIMIT ?, ?
-    `,
+    LIMIT ?, ?`,
     [adminPkId, startPageNo, limit]
   );
 };
 
 module.exports = {
+  getCount,
   getList,
 };
