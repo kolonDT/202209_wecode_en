@@ -1,13 +1,11 @@
 const express = require("express");
-const mainController = require("../controllers/mainController");
+const editorController = require("../controllers/editorController");
 const errorHandler = require("../middlewares/errorHandler");
 const { validateToken } = require("../middlewares/auth.js");
 
 const router = express.Router();
 
-router.get("/count", validateToken, errorHandler(mainController.getCount));
-
-router.get("/list", validateToken, errorHandler(mainController.getList));
+router.post("/made", validateToken, errorHandler(editorController.madeEditor));
 
 module.exports = {
   router,
