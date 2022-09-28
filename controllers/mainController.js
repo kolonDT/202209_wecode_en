@@ -3,6 +3,7 @@ const error = require("../middlewares/errorConstructor");
 
 const getCount = async (req, res) => {
   const adminPkId = req.decoded.id;
+  await mainService.updateSurveyStatus(adminPkId);
   const mainPageCount = await mainService.getCount(adminPkId);
   res.status(200).json({ mainPageCount });
 };

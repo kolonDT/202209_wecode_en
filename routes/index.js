@@ -12,7 +12,7 @@ router.use("/main", mainRouter.router);
 
 router.use("/editor", editorRouter.router);
 
-router.use("/link", linkRouter.router); //미완성
+router.use("/link", linkRouter.router);
 
 router.use("/opinion", opinionRouter.router);
 

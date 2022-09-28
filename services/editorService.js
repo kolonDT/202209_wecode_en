@@ -27,7 +27,7 @@ const makeLink = async (
     landingUrl
   );
   const surveyId = (await editorDao.getSurveyId())[0].id;
-  const surveyLink = `http://localhost:8000/link/${surveyId}`;
+  const surveyLink = `http://localhost:8000/user/${surveyId}`;
   await editorDao.SetSurveyLink(surveyId, surveyLink);
   return surveyLink;
 };
