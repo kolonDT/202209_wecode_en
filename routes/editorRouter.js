@@ -14,7 +14,11 @@ router.post(
   errorHandler(editorController.imageUploader)
 );
 
-router.get("/image/:formId", errorHandler(editorController.imageSender));
+router.get(
+  "/image/:formId",
+  validateToken,
+  errorHandler(editorController.imageSender)
+);
 
 module.exports = {
   router,
