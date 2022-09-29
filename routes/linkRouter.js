@@ -5,7 +5,7 @@ const { validateToken } = require("../middlewares/auth.js");
 
 const router = express.Router();
 
-router.get("/", validateToken, errorHandler(linkController.getLink));
+router.get("/:id", validateToken, errorHandler(linkController.getLink));
 
 module.exports = {
   router,
