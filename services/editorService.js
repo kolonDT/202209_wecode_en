@@ -1,4 +1,6 @@
 const editorDao = require("../models/editorDao");
+const fs = require("fs");
+const path = require("path");
 
 const makeForm = async (formData) => {
   await editorDao.makeForm(formData);
@@ -32,7 +34,22 @@ const makeLink = async (
   return surveyLink;
 };
 
+const setImage = async (imageLocation) => {
+  const image = fs.readFileSync(imageLocation);
+  await editorDao.setImage(image);
+};
+
+const getImage = async (formId) => {
+  const imageCode = await editorDao.getImage(formId);
+  const filename = `${formId}.${Date.now()}.jpg`;
+  fs.writeFileSync(`./images/${filename}`, imageCode[0].img);
+  const absPath = path.resolve("./images", `${filename}`);
+  return absPath;
+};
+
 module.exports = {
   makeForm,
   makeLink,
+  setImage,
+  getImage,
 };
