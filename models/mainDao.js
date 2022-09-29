@@ -27,7 +27,8 @@ const getList = async (startPageNo, limit, adminPkId) => {
         status,
         DATE_FORMAT(start_date, '%Y-%m-%d') AS start_date,
         DATE_FORMAT(end_date, '%Y-%m-%d') AS end_date,
-        COUNT(opinion.id) AS count
+        COUNT(opinion.id) AS count,
+        survey_url AS surveyLink
       FROM survey
       INNER JOIN survey_status 
       ON survey_status_id = survey_status.id

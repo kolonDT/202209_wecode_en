@@ -3,7 +3,7 @@ const error = require("../middlewares/errorConstructor");
 
 const getLink = async (req, res) => {
   const surveyId = Number(req.params.id);
-  if (typeof surveyId !== "number") {
+  if (!surveyId) {
     throw new error("surveyId must be number", 400);
   }
   await linkService.checkSurveyId(surveyId);
