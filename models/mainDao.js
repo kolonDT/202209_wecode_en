@@ -45,7 +45,41 @@ const getList = async (startPageNo, limit, adminPkId) => {
   }
 };
 
+const checkFormId = async (formId) => {
+  try {
+    return database.query(
+      `
+      SELECT EXISTS(
+        SELECT 
+          id 
+        from form
+        WHERE id = ?
+      ) AS RESULT`,
+      [formId]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
+const getForm = async (formId) => {
+  try {
+    return await database.query(
+      `
+      SELECT 
+        form_data
+      FROM form
+      WHERE id = ?`,
+      [formId]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
 module.exports = {
   getCount,
   getList,
+  getForm,
+  checkFormId,
 };
