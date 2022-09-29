@@ -42,6 +42,20 @@ const madeEditor = async (req, res) => {
   res.status(201).json({ surveyLink });
 };
 
+const imageUploader = async (req, res) => {
+  const imageLocation = `./uploads/${req.file.filename}`;
+  editorService.setImage(imageLocation);
+  res.status(200).json({ message: "success" });
+};
+
+const imageSender = async (req, res) => {
+  const absPath = await editorService.getImage(req.params.formId);
+
+  res.sendFile(`${absPath}`);
+};
+
 module.exports = {
   madeEditor,
+  imageUploader,
+  imageSender,
 };

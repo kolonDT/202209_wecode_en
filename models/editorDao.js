@@ -96,10 +96,46 @@ const SetSurveyLink = async (surveyId, surveyLink) => {
   }
 };
 
+const setImage = async (image) => {
+  const formId = await getFormId();
+  try {
+    await database.query(
+      `
+    INSERT INTO images (
+      img,
+      form_id
+    )VALUES(
+      ?,?
+    )
+    `,
+      [image, formId[0].id]
+    );
+  } catch (err) {
+    throw new error("image set failed", 500);
+  }
+};
+
+const getImage = async (formId) => {
+  try {
+    return await database.query(
+      `
+      SELECT img 
+      FROM images 
+      WHERE images.form_id =?
+      `,
+      [formId]
+    );
+  } catch (err) {
+    throw new error("image get failed", 500);
+  }
+};
+
 module.exports = {
   makeForm,
   getFormId,
   makeSurvey,
   getSurveyId,
   SetSurveyLink,
+  setImage,
+  getImage,
 };
