@@ -9,6 +9,8 @@ router.get("/count", validateToken, errorHandler(mainController.getCount));
 
 router.get("/list", validateToken, errorHandler(mainController.getList));
 
+router.get("/form/:id", validateToken, errorHandler(mainController.getForm));
+
 module.exports = {
   router,
 };

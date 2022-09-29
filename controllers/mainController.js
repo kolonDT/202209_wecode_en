@@ -18,7 +18,14 @@ const getList = async (req, res) => {
   res.status(200).json({ mainPageList });
 };
 
+const getForm = async (req, res) => {
+  const formId = req.params.id;
+  const formData = await mainService.getForm(formId);
+  res.status(200).json({ formData });
+};
+
 module.exports = {
   getCount,
   getList,
+  getForm,
 };
