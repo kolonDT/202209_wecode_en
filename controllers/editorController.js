@@ -53,7 +53,7 @@ const imageSender = async (req, res) => {
   const absPath = await editorService.getImage(req.params.formId);
 
   res.sendFile(`${absPath}`, () => {
-    fs.unlink(`${absPath}`, (result) => {});
+    fs.unlink(`${absPath}`, () => {});
   });
 };
 
