@@ -37,7 +37,7 @@ const makeLink = async (
 const setImage = async (imageLocation) => {
   const image = fs.readFileSync(imageLocation);
   await editorDao.setImage(image);
-  fs.unlink(imageLocation, (result) => {});
+  fs.unlink(imageLocation, () => {});
 };
 
 const getImage = async (formId) => {

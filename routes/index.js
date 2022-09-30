@@ -5,6 +5,7 @@ const mainRouter = require("./mainRouter");
 const editorRouter = require("./editorRouter");
 const linkRouter = require("./linkRouter");
 const opinionRouter = require("./opinionRouter");
+const surveypageRouter = require("./surveypageRouter");
 
 router.use("/admin", adminRouter.router);
 
@@ -15,5 +16,7 @@ router.use("/editor", editorRouter.router);
 router.use("/link", linkRouter.router);
 
 router.use("/opinion", opinionRouter.router);
+
+router.use("/surveypage", surveypageRouter.router);
 
 module.exports = router;
