@@ -4,11 +4,9 @@ const path = require("path");
 
 try {
   fs.readdirSync("uploads");
-  fs.readdirSync("images");
 } catch {
   console.error("폴더가 없습니다. 폴더를 생성합니다.");
   fs.mkdirSync("uploads");
-  fs.mkdirSync("images");
 }
 
 const upload = multer({
