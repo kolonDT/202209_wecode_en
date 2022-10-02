@@ -10,6 +10,7 @@ router.post("/made", validateToken, errorHandler(editorController.madeEditor));
 
 router.post(
   "/image",
+
   upload.upload.single("image"),
   errorHandler(editorController.imageUploader)
 );
