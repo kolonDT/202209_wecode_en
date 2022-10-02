@@ -17,7 +17,12 @@ const setOpinion = async (req, res) => {
     );
   }
 
-  await opinionService.setOpinion(surveyId, result, phone, agreement);
+  await opinionService.setOpinion(
+    surveyId,
+    result,
+    phone.match(/[0-9]/g).join(""),
+    agreement
+  );
 
   res.status(200).json({ message: "success" });
 };
