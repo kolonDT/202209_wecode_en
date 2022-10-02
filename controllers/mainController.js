@@ -18,6 +18,21 @@ const getList = async (req, res) => {
   res.status(200).json({ mainPageList });
 };
 
+const getOptionList = async (req, res) => {
+  const adminPkId = req.decoded.id;
+  const searchWord = req.query.search;
+  const filterWord = req.query.filter;
+  if (!searchWord && !filterWord) {
+    throw new error("key error", 400);
+  }
+  const mainPageList = await mainService.getOptionList(
+    adminPkId,
+    searchWord,
+    filterWord
+  );
+  res.status(200).json({ mainPageList });
+};
+
 const getForm = async (req, res) => {
   const formId = req.params.id;
   const formData = await mainService.getForm(formId);
@@ -28,4 +43,5 @@ module.exports = {
   getCount,
   getList,
   getForm,
+  getOptionList,
 };
