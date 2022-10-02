@@ -13,6 +13,16 @@ const getList = async (pageNo, limit, adminPkId) => {
   return getList;
 };
 
+const getOptionList = async (adminPkId, searchWord, filterWord) => {
+  if (searchWord) {
+    const searchList = await mainDao.getSearchList(adminPkId, searchWord);
+    return searchList;
+  } else if (filterWord) {
+    const filterList = await mainDao.getFilterList(adminPkId, filterWord);
+    return filterList;
+  }
+};
+
 const getForm = async (formId) => {
   const checkFormId = await mainDao.checkFormId(formId);
   if (checkFormId[0].RESULT === "0") {
@@ -26,4 +36,5 @@ module.exports = {
   getCount,
   getList,
   getForm,
+  getOptionList,
 };
