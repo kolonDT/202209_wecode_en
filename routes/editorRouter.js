@@ -16,7 +16,7 @@ router.post(
 
 router.get(
   "/image/:formId",
-  validateToken,
+
   errorHandler(editorController.imageSender)
 );
 
