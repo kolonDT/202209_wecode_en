@@ -19,12 +19,6 @@ const madeEditor = async (req, res) => {
   if (!regex.test(startDate) || !regex.test(endDate)) {
     throw new error("date FORM ERROR", 400);
   }
-  if (anonymousAllow && anonymousAllow !== 1 && anonymousAllow !== 0) {
-    throw new error("anonymousAllow KEY ERROR", 400);
-  }
-  if (duplicationAllow && duplicationAllow !== 1 && duplicationAllow !== 0) {
-    throw new error("duplicationAllow KEY ERROR", 400);
-  }
   const formId = await editorService.makeForm(formData);
   if (typeof formId !== "number") {
     throw new error("formId KEY ERROR", 400);

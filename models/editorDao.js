@@ -9,7 +9,7 @@ const makeForm = async (formData) => {
       INSERT INTO form(
         form_data
       ) VALUES (?)`,
-      [formData]
+      [JSON.stringify(formData)]
     );
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
