@@ -2,24 +2,51 @@ const mainDao = require("../models/mainDao");
 
 const error = require("../middlewares/errorConstructor");
 
-const getCount = async (adminPkId) => {
-  const getCount = await mainDao.getCount(adminPkId);
-  return getCount[0].surveycount;
-};
-
 const getList = async (pageNo, limit, adminPkId) => {
   const startPageNo = pageNo * limit - limit;
   const getList = await mainDao.getList(startPageNo, limit, adminPkId);
   return getList;
 };
 
-const getOptionList = async (adminPkId, searchWord, filterWord) => {
-  if (searchWord) {
-    const searchList = await mainDao.getSearchList(adminPkId, searchWord);
-    return searchList;
-  } else if (filterWord) {
-    const filterList = await mainDao.getFilterList(adminPkId, filterWord);
+const getMainCount = async (adminPkId) => {
+  const getMainCount = await mainDao.getMainCount(adminPkId);
+  return getMainCount[0].count;
+};
+
+const getOptionList = async (
+  adminPkId,
+  searchWord,
+  filterWord,
+  pageNo,
+  limit
+) => {
+  const startPageNo = pageNo * limit - limit;
+  if (filterWord) {
+    const filterList = await mainDao.getFilterList(
+      adminPkId,
+      filterWord,
+      startPageNo,
+      limit
+    );
     return filterList;
+  } else {
+    const searchList = await mainDao.getSearchList(
+      adminPkId,
+      searchWord,
+      startPageNo,
+      limit
+    );
+    return searchList;
+  }
+};
+
+const getOptionCount = async (adminPkId, searchWord, filterWord) => {
+  if (filterWord) {
+    const getFilterCount = await mainDao.getFilterCount(adminPkId, filterWord);
+    return getFilterCount[0].count;
+  } else {
+    const getSearchCount = await mainDao.getSearchCount(adminPkId, searchWord);
+    return getSearchCount[0].count;
   }
 };
 
@@ -33,8 +60,9 @@ const getForm = async (formId) => {
 };
 
 module.exports = {
-  getCount,
   getList,
   getForm,
   getOptionList,
+  getMainCount,
+  getOptionCount,
 };

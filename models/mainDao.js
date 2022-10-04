@@ -2,21 +2,6 @@ const { database } = require("./database");
 
 const error = require("../middlewares/errorConstructor");
 
-const getCount = async (adminPkId) => {
-  try {
-    return await database.query(
-      `
-      SELECT 
-        COUNT(id) AS surveycount
-      FROM survey
-      WHERE survey.admin_id = ?`,
-      [adminPkId]
-    );
-  } catch (err) {
-    throw new error("INVALID_DATA_INPUT", 500);
-  }
-};
-
 const getList = async (startPageNo, limit, adminPkId) => {
   try {
     return await database.query(
@@ -45,7 +30,22 @@ const getList = async (startPageNo, limit, adminPkId) => {
   }
 };
 
-const getSearchList = async (adminPkId, searchWord) => {
+const getMainCount = async (adminPkId) => {
+  try {
+    return await database.query(
+      `
+      SELECT 
+        COUNT(id) AS count
+      FROM survey
+      WHERE survey.admin_id = ?`,
+      [adminPkId]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
+const getSearchList = async (adminPkId, searchWord, startPageNo, limit) => {
   try {
     return await database.query(
       `
@@ -65,7 +65,24 @@ const getSearchList = async (adminPkId, searchWord) => {
       WHERE survey.admin_id = ? AND
       name LIKE "%${searchWord}%"
       GROUP BY survey.id
-      ORDER BY survey_status_id, survey.id DESC`,
+      ORDER BY survey_status_id, survey.id DESC
+      LIMIT ?, ?`,
+      [adminPkId, startPageNo, limit]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
+const getSearchCount = async (adminPkId, searchWord) => {
+  try {
+    return await database.query(
+      `
+      SELECT 
+        COUNT(id) AS count
+      FROM survey
+      WHERE survey.admin_id = ? AND 
+      name LIKE "%${searchWord}%"`,
       [adminPkId]
     );
   } catch (err) {
@@ -73,7 +90,25 @@ const getSearchList = async (adminPkId, searchWord) => {
   }
 };
 
-const getFilterList = async (adminPkId, filterWord) => {
+const getFilterCount = async (adminPkId, filterWord) => {
+  try {
+    return await database.query(
+      `
+      SELECT 
+        COUNT(survey.id) AS count
+      FROM survey
+      INNER JOIN survey_status 
+      ON survey_status_id = survey_status.id
+      WHERE survey.admin_id = ? AND
+      status = ?`,
+      [adminPkId, filterWord]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
+const getFilterList = async (adminPkId, filterWord, startPageNo, limit) => {
   try {
     return await database.query(
       `
@@ -93,8 +128,9 @@ const getFilterList = async (adminPkId, filterWord) => {
       WHERE survey.admin_id = ? AND
       status = ?
       GROUP BY survey.id
-      ORDER BY survey_status_id, survey.id DESC`,
-      [adminPkId, filterWord]
+      ORDER BY survey_status_id, survey.id DESC
+      LIMIT ?, ?`,
+      [adminPkId, filterWord, startPageNo, limit]
     );
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
@@ -134,10 +170,12 @@ const getForm = async (formId) => {
 };
 
 module.exports = {
-  getCount,
   getList,
+  getMainCount,
   getForm,
   checkFormId,
   getSearchList,
   getFilterList,
+  getSearchCount,
+  getFilterCount,
 };

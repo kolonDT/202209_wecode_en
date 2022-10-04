@@ -5,8 +5,6 @@ const { validateToken } = require("../middlewares/auth.js");
 
 const router = express.Router();
 
-router.get("/count", validateToken, errorHandler(mainController.getCount));
-
 router.get("/list", validateToken, errorHandler(mainController.getList));
 
 router.get(
