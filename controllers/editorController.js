@@ -19,6 +19,19 @@ const madeEditor = async (req, res) => {
   if (!regex.test(startDate) || !regex.test(endDate)) {
     throw new error("date FORM ERROR", 400);
   }
+<<<<<<< HEAD
+=======
+  if (anonymousAllow && anonymousAllow !== true && anonymousAllow !== false) {
+    throw new error("anonymousAllow KEY ERROR", 400);
+  }
+  if (
+    duplicationAllow &&
+    duplicationAllow !== true &&
+    duplicationAllow !== false
+  ) {
+    throw new error("duplicationAllow KEY ERROR", 400);
+  }
+>>>>>>> a408628 (feat:(modify2) image)
   const formId = await editorService.makeForm(formData);
   if (typeof formId !== "number") {
     throw new error("formId KEY ERROR", 400);
@@ -39,7 +52,7 @@ const madeEditor = async (req, res) => {
 const imageUploader = async (req, res) => {
   const imageLocation = `./uploads/${req.file.filename}`;
   editorService.setImage(imageLocation);
-  res.status(200).json({ message: "success" });
+  res.status(201).json({ message: "success" });
 };
 
 const imageSender = async (req, res) => {
