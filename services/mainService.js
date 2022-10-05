@@ -59,10 +59,25 @@ const getForm = async (formId) => {
   return getForm[0].form_data;
 };
 
+const quitSurvey = async (adminPkId, surveyId) => {
+  const checkSurveyId = await mainDao.checkSurveyId(surveyId, adminPkId);
+  console.log(checkSurveyId);
+  if (checkSurveyId[0].RESULT === "0") {
+    throw new error("surveyId KEY ERROR", 400);
+  }
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = ("0" + (today.getMonth() + 1)).slice(-2);
+  let day = ("0" + (today.getDate() - 1)).slice(-2);
+  let yesterday = year + "-" + month + "-" + day;
+  await mainDao.quitSurvey(yesterday, surveyId);
+};
+
 module.exports = {
   getList,
   getForm,
   getOptionList,
   getMainCount,
   getOptionCount,
+  quitSurvey,
 };
