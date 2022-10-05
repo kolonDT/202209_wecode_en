@@ -15,6 +15,12 @@ router.get(
 
 router.get("/form/:id", validateToken, errorHandler(mainController.getForm));
 
+router.post(
+  "/list/:id",
+  validateToken,
+  errorHandler(mainController.quitSurvey)
+);
+
 module.exports = {
   router,
 };

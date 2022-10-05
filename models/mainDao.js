@@ -169,6 +169,55 @@ const getForm = async (formId) => {
   }
 };
 
+const checkSurveyId = async (surveyId, adminPkId) => {
+  try {
+    return database.query(
+      `
+      SELECT EXISTS(
+        SELECT 
+          id 
+        from survey
+        WHERE id = ? AND
+        admin_id = ?
+      ) AS RESULT`,
+      [surveyId, adminPkId]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
+const quitSurvey = async (yesterday, surveyId) => {
+  try {
+    await database.query(
+      `
+      UPDATE 
+        survey
+      SET start_date = ? 
+      WHERE id = ?`,
+      [yesterday, surveyId]
+    );
+    await database.query(
+      `
+      UPDATE 
+        survey
+      SET end_date = ? 
+      WHERE id = ?`,
+      [yesterday, surveyId]
+    );
+    await database.query(
+      `
+      UPDATE 
+        survey
+      SET survey_status_id = 3 
+      WHERE id = ?`,
+      [surveyId]
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
 module.exports = {
   getList,
   getMainCount,
@@ -178,4 +227,6 @@ module.exports = {
   getFilterList,
   getSearchCount,
   getFilterCount,
+  checkSurveyId,
+  quitSurvey,
 };

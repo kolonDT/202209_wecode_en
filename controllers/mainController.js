@@ -43,8 +43,16 @@ const getForm = async (req, res) => {
   res.status(200).json({ formData });
 };
 
+const quitSurvey = async (req, res) => {
+  const adminPkId = req.decoded.id;
+  const surveyId = req.params.id;
+  await mainService.quitSurvey(adminPkId, surveyId);
+  res.status(200).json({ message: "udpate success" });
+};
+
 module.exports = {
   getList,
   getForm,
   getOptionList,
+  quitSurvey,
 };
