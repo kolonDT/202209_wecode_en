@@ -39,7 +39,7 @@ const madeEditor = async (req, res) => {
 const imageUploader = async (req, res) => {
   const imageLocation = `./uploads/${req.file.filename}`;
   editorService.setImage(imageLocation);
-  res.status(200).json({ message: "success" });
+  res.status(201).json({ message: "success" });
 };
 
 const imageSender = async (req, res) => {

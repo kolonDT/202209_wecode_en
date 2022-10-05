@@ -1,6 +1,5 @@
 const editorDao = require("../models/editorDao");
 const path = require("path");
-
 const makeForm = async (formData) => {
   await editorDao.makeForm(formData);
   const formId = await editorDao.getFormId(formData);

@@ -12,7 +12,7 @@ const makeForm = async (formData) => {
       [JSON.stringify(formData)]
     );
   } catch (err) {
-    throw new error("INVALID_DATA_INPUT", 500);
+    throw new error("INVALID_DATA_INPUT!!!", 500);
   }
 };
 
@@ -27,6 +27,11 @@ const getFormId = async () => {
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
   }
+};
+
+const getImagesId = async () => {
+  return database.query(`SELECT MAX(id) as id
+        FROM images`);
 };
 
 const makeSurvey = async (
@@ -63,6 +68,15 @@ const makeSurvey = async (
         formId,
       ]
     );
+    const imagesId = await getImagesId();
+    await database.query(
+      `
+      UPDATE images
+      SET form_id = ?
+      WHERE images.id = ?
+      `,
+      [formId, imagesId[0].id]
+    );
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
   }
@@ -97,17 +111,15 @@ const SetSurveyLink = async (surveyId, surveyLink) => {
 };
 
 const setImage = async (absPath) => {
-  const formId = await getFormId();
   await database.query(
     `
     INSERT INTO images (
-      img,
-      form_id
+      img
     ) VALUES (
-      ?, ?
+      ?
     )
     `,
-    [absPath, formId[0].id]
+    [absPath]
   );
 };
 
