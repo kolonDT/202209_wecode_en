@@ -18,41 +18,26 @@ const getOptionList = async (
   searchWord,
   filterWord,
   pageNo,
-  limit,
-  queryKeys
+  limit
 ) => {
   const startPageNo = pageNo * limit - limit;
-  if (queryKeys.includes("filter")) {
-    const filterList = await mainDao.getFilterList(
-      adminPkId,
-      filterWord,
-      startPageNo,
-      limit
-    );
-    return filterList;
-  } else if (queryKeys.includes("search")) {
-    const searchList = await mainDao.getSearchList(
-      adminPkId,
-      searchWord,
-      startPageNo,
-      limit
-    );
-    return searchList;
-  } else {
-    throw new error("query KEY ERROR", 400);
-  }
+  const getOptionList = await mainDao.getOptionList(
+    adminPkId,
+    searchWord,
+    filterWord,
+    startPageNo,
+    limit
+  );
+  return getOptionList;
 };
 
-const getOptionCount = async (adminPkId, searchWord, filterWord, queryKeys) => {
-  if (queryKeys.includes("filter")) {
-    const getFilterCount = await mainDao.getFilterCount(adminPkId, filterWord);
-    return getFilterCount[0].count;
-  } else if (queryKeys.includes("search")) {
-    const getSearchCount = await mainDao.getSearchCount(adminPkId, searchWord);
-    return getSearchCount[0].count;
-  } else {
-    throw new error("query KEY ERROR", 400);
-  }
+const getOptionCount = async (adminPkId, searchWord, filterWord) => {
+  const getOptionCount = await mainDao.getOptionCount(
+    adminPkId,
+    searchWord,
+    filterWord
+  );
+  return getOptionCount[0].count;
 };
 
 const getForm = async (formId) => {

@@ -15,7 +15,6 @@ const getList = async (req, res) => {
 
 const getOptionList = async (req, res) => {
   const adminPkId = req.decoded.id;
-  const queryKeys = Object.keys(req.query);
   const searchWord = req.query.search;
   const filterWord = req.query.filter;
   const pageNo = Number(req.query.pageNo);
@@ -28,14 +27,12 @@ const getOptionList = async (req, res) => {
     searchWord,
     filterWord,
     pageNo,
-    limit,
-    queryKeys
+    limit
   );
   const mainPageCount = await mainService.getOptionCount(
     adminPkId,
     searchWord,
-    filterWord,
-    queryKeys
+    filterWord
   );
   res.status(200).json({ mainPageList, mainPageCount });
 };
