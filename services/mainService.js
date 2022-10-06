@@ -18,10 +18,11 @@ const getOptionList = async (
   searchWord,
   filterWord,
   pageNo,
-  limit
+  limit,
+  queryKeys
 ) => {
   const startPageNo = pageNo * limit - limit;
-  if (filterWord) {
+  if (queryKeys.includes("filter")) {
     const filterList = await mainDao.getFilterList(
       adminPkId,
       filterWord,
@@ -29,7 +30,7 @@ const getOptionList = async (
       limit
     );
     return filterList;
-  } else {
+  } else if (queryKeys.includes("search")) {
     const searchList = await mainDao.getSearchList(
       adminPkId,
       searchWord,
@@ -37,16 +38,20 @@ const getOptionList = async (
       limit
     );
     return searchList;
+  } else {
+    throw new error("query KEY ERROR", 400);
   }
 };
 
-const getOptionCount = async (adminPkId, searchWord, filterWord) => {
-  if (filterWord) {
+const getOptionCount = async (adminPkId, searchWord, filterWord, queryKeys) => {
+  if (queryKeys.includes("filter")) {
     const getFilterCount = await mainDao.getFilterCount(adminPkId, filterWord);
     return getFilterCount[0].count;
-  } else {
+  } else if (queryKeys.includes("search")) {
     const getSearchCount = await mainDao.getSearchCount(adminPkId, searchWord);
     return getSearchCount[0].count;
+  } else {
+    throw new error("query KEY ERROR", 400);
   }
 };
 
@@ -61,7 +66,6 @@ const getForm = async (formId) => {
 
 const quitSurvey = async (adminPkId, surveyId) => {
   const checkSurveyId = await mainDao.checkSurveyId(surveyId, adminPkId);
-  console.log(checkSurveyId);
   if (checkSurveyId[0].RESULT === "0") {
     throw new error("surveyId KEY ERROR", 400);
   }

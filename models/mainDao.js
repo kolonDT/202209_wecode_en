@@ -100,8 +100,8 @@ const getFilterCount = async (adminPkId, filterWord) => {
       INNER JOIN survey_status 
       ON survey_status_id = survey_status.id
       WHERE survey.admin_id = ? AND
-      status = ?`,
-      [adminPkId, filterWord]
+      status LIKE "%${filterWord}%"`,
+      [adminPkId]
     );
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
@@ -126,11 +126,11 @@ const getFilterList = async (adminPkId, filterWord, startPageNo, limit) => {
       LEFT JOIN opinion 
       ON survey.id = opinion.survey_id
       WHERE survey.admin_id = ? AND
-      status = ?
+      status LIKE "%${filterWord}%"
       GROUP BY survey.id
       ORDER BY survey_status_id, survey.id DESC
       LIMIT ?, ?`,
-      [adminPkId, filterWord, startPageNo, limit]
+      [adminPkId, startPageNo, limit]
     );
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
