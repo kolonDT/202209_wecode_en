@@ -34,6 +34,19 @@ const getImagesId = async () => {
         FROM images`);
 };
 
+const getSurveyId = async () => {
+  try {
+    return await database.query(
+      `
+      SELECT 
+        MAX(id) AS id 
+      FROM survey`
+    );
+  } catch (err) {
+    throw new error("INVALID_DATA_INPUT", 500);
+  }
+};
+
 const makeSurvey = async (
   adminPkId,
   formId,
@@ -69,6 +82,7 @@ const makeSurvey = async (
       ]
     );
     const imagesId = await getImagesId();
+
     await database.query(
       `
       UPDATE images
@@ -76,19 +90,6 @@ const makeSurvey = async (
       WHERE images.id = ?
       `,
       [formId, imagesId[0].id]
-    );
-  } catch (err) {
-    throw new error("INVALID_DATA_INPUT", 500);
-  }
-};
-
-const getSurveyId = async () => {
-  try {
-    return await database.query(
-      `
-      SELECT 
-        MAX(id) AS id 
-      FROM survey`
     );
   } catch (err) {
     throw new error("INVALID_DATA_INPUT", 500);
@@ -123,15 +124,23 @@ const setImage = async (absPath) => {
   );
 };
 
-const getImage = async (formId) => {
+const getImage = async (surveyId) => {
   try {
+    const formId = await database.query(
+      `
+    SELECT form_id
+    FROM survey 
+    WHERE survey.id = ?
+    `,
+      [surveyId]
+    );
     return await database.query(
       `
       SELECT img 
       FROM images 
       WHERE images.form_id =?
       `,
-      [formId]
+      [formId[0].form_id]
     );
   } catch (err) {
     throw new error("image get failed", 500);

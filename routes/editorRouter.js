@@ -16,7 +16,7 @@ router.post(
 );
 
 router.get(
-  "/image/:formId",
+  "/image/:surveyId",
 
   errorHandler(editorController.imageSender)
 );

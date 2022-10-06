@@ -7,8 +7,8 @@ const getSurveyPageData = async (surveyId) => {
     form.form_data as formData, 
     survey.duplication_allow as duplicationAllow, 
     survey.anonymous_allow as anonymousAllow,
-    survey.start_date as startDate,
-    survey.end_date as endDate,
+    DATE_FORMAT(start_date, "%Y-%m-%d") as startDate,
+    DATE_FORMAT(end_date, "%Y-%m-%d") as endDate,
     survey.name
     FROM form
     JOIN survey 

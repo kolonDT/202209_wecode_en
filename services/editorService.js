@@ -37,8 +37,8 @@ const setImage = async (imageLocation) => {
   await editorDao.setImage(absPath);
 };
 
-const getImage = async (formId) => {
-  const imagePath = await editorDao.getImage(formId);
+const getImage = async (surveyId) => {
+  const imagePath = await editorDao.getImage(surveyId);
   return imagePath;
 };
 

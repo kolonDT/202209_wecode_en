@@ -2,9 +2,8 @@ const surveypageDao = require("../models/surveypageDao");
 
 const getSurveyPageData = async (surveyId) => {
   const value = await surveypageDao.getSurveyPageData(surveyId);
-
   const result = {
-    formData: value[0].formData,
+    formData: JSON.parse(value[0].formData),
     etc: {
       duplicationAllow: value[0].duplicationAllow,
       anonymousAllow: value[0].anonymousAllow,
@@ -13,6 +12,7 @@ const getSurveyPageData = async (surveyId) => {
       name: value[0].name,
     },
   };
+  console.log(result);
   return result;
 };
 
