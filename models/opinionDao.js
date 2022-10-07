@@ -1,13 +1,13 @@
 const { database } = require("../models/database");
 
 const setOpinion = async (surveyId, result, phone, agreement) => {
-  database.query(
+  await database.query(
     `
         INSERT INTO opinion 
             (survey_id, 
-             result, 
-             phone, 
-             agreement)
+              result, 
+              phone, 
+              agreement)
         VALUES 
             (?,?,?,?)
     `,

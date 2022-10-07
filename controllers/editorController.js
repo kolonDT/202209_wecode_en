@@ -37,13 +37,18 @@ const madeEditor = async (req, res) => {
 };
 
 const imageUploader = async (req, res) => {
+  if (!req.file) {
+    throw new error("image_upload_failed", 400);
+  }
+
   const imageLocation = `./uploads/${req.file.filename}`;
   editorService.setImage(imageLocation);
+
   res.status(201).json({ message: "success" });
 };
 
 const imageSender = async (req, res) => {
-  const absPath = await editorService.getImage(req.params.formId);
+  const absPath = await editorService.getImage(req.params.surveyId);
   res.sendFile(`${absPath[0].img}`, () => {});
 };
 

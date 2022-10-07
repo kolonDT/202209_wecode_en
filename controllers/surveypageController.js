@@ -9,7 +9,7 @@ const getSurveyPageData = async (req, res) => {
   }
 
   const result = await surveypageService.getSurveyPageData(surveyId);
-  res.status(200).json({ result });
+  res.status(200).json(result);
 };
 
 const checkDuplicateParticipate = async (req, res) => {
