@@ -2,6 +2,11 @@ const opinionDao = require("../models/opinionDao");
 const error = require("../middlewares/errorConstructor");
 
 const setOpinion = async (surveyId, userData) => {
+  console.log(surveyId, userData);
+  if (Object.is(Number(surveyId), NaN) || !userData) {
+    throw new error(`INVALID_INPUT`, 400);
+  }
+
   const temp = JSON.parse(userData).filter(Boolean);
   let phone = null,
     agreement = null;

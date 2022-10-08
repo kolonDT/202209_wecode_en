@@ -56,9 +56,21 @@ const setPhoneAndAgreement = async (phone, agreement) => {
   );
 };
 
+const getPhone = async (surveyId) => {
+  return await database.query(
+    `
+    SELECT phone 
+    FROM opinion
+    WHERE survey_id = ?
+    `,
+    [surveyId]
+  );
+};
+
 module.exports = {
   getSumParticipationSurvey,
   getOpinionResult,
   getFormDataForQuestion,
   setPhoneAndAgreement,
+  getPhone,
 };

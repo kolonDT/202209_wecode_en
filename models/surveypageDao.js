@@ -9,7 +9,8 @@ const getSurveyPageData = async (surveyId) => {
     survey.anonymous_allow as anonymousAllow,
     DATE_FORMAT(start_date, "%Y-%m-%d") as startDate,
     DATE_FORMAT(end_date, "%Y-%m-%d") as endDate,
-    survey.name
+    survey.name,
+    survey.landing_url as url
     FROM form
     JOIN survey 
     ON form.id = survey.form_id
@@ -19,21 +20,6 @@ const getSurveyPageData = async (surveyId) => {
   );
 };
 
-const checkDuplicateParticipate = async (phone) => {
-  const result = await database.query(
-    `
-        SELECT EXISTS (
-            SELECT phone
-            FROM opinion
-            WHERE opinion.phone = ?
-        )
-        `,
-    [phone]
-  );
-  return Number(Object.values(result[0])[0]);
-};
-
 module.exports = {
   getSurveyPageData,
-  checkDuplicateParticipate,
 };

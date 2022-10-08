@@ -27,6 +27,10 @@ const checkToMultiple = (val) => {
 };
 
 const makeDataForStatSub = async (surveyId) => {
+  if (Object.is(Number(surveyId), NaN)) {
+    throw new error(`surveyId: '${surveyId}', NOT_A_NUMBER`, 400);
+  }
+
   const questions = await statisticDao.getFormDataForQuestion(surveyId);
   const opinions = await statisticDao.getOpinionResult(surveyId);
 
@@ -69,8 +73,12 @@ const makeDataForStatSub = async (surveyId) => {
 
   return result;
 };
-let count = 0;
+
 const makeDataForStatMulti = async (surveyId) => {
+  if (Object.is(Number(surveyId), NaN)) {
+    throw new error(`surveyId: '${surveyId}', NOT_A_NUMBER`, 400);
+  }
+
   const questions = await statisticDao.getFormDataForQuestion(surveyId);
   const opinions = await statisticDao.getOpinionResult(surveyId);
 
@@ -149,8 +157,16 @@ const makeDataForStatMulti = async (surveyId) => {
   return result;
 };
 
+const getPhone = async (surveyId) => {
+  if (Object.is(Number(surveyId), NaN)) {
+    throw new error(`surveyId: '${surveyId}', NOT_A_NUMBER`, 400);
+  }
+  return await statisticDao.getPhone(surveyId);
+};
+
 module.exports = {
   countSumOfParticipation,
   makeDataForStatSub,
   makeDataForStatMulti,
+  getPhone,
 };

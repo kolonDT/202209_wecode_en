@@ -6,11 +6,6 @@ const router = express.Router();
 
 router.get("/:surveyId", errorHandler(surveypageController.getSurveyPageData));
 
-router.get(
-  "/check/:phone",
-  errorHandler(surveypageController.checkDuplicateParticipate)
-);
-
 module.exports = {
   router,
 };
