@@ -12,7 +12,6 @@ const getSurveyPageData = async (surveyId) => {
       name: value[0].name,
     },
   };
-  console.log(result);
   return result;
 };
 

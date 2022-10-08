@@ -14,6 +14,11 @@ router.get(
   errorHandler(statisticController.makeDataForStatSub)
 );
 
+router.get(
+  "/multiple/:surveyId",
+  errorHandler(statisticController.makeDataForStatMulti)
+);
+
 module.exports = {
   router,
 };
