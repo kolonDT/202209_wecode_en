@@ -13,7 +13,6 @@ const setOpinion = async (surveyId, userData) => {
       agreement = val.agreement;
     }
   }
-  console.log(phone, agreement);
   return await opinionDao.setOpinion(surveyId, userData, phone, agreement);
 };
 
