@@ -12,21 +12,6 @@ const getSurveyPageData = async (req, res) => {
   res.status(200).json(result);
 };
 
-const checkDuplicateParticipate = async (req, res) => {
-  const phone = req.params.phone;
-
-  if (!phone) {
-    throw new error("invalid_value", 400);
-  }
-
-  const result = await surveypageService.checkDuplicateParticipate(
-    phone.match(/[0-9]/g).join("")
-  );
-  const value = result === 1 ? true : false;
-  res.status(200).json({ value });
-};
-
 module.exports = {
   getSurveyPageData,
-  checkDuplicateParticipate,
 };

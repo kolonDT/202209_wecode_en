@@ -2,6 +2,7 @@ const error = require("../middlewares/errorConstructor");
 const opinionService = require("../services/opinionService");
 
 const setOpinion = async (req, res) => {
+  console.log(req.body);
   const { surveyId } = req.params;
   const { userData } = req.body;
   if (!surveyId) {

@@ -10,16 +10,12 @@ const getSurveyPageData = async (surveyId) => {
       startDate: value[0].startDate,
       endDate: value[0].endDate,
       name: value[0].name,
+      url: value[0].url,
     },
   };
   return result;
 };
 
-const checkDuplicateParticipate = async (phone) => {
-  return await surveypageDao.checkDuplicateParticipate(phone);
-};
-
 module.exports = {
   getSurveyPageData,
-  checkDuplicateParticipate,
 };

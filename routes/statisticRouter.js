@@ -19,6 +19,8 @@ router.get(
   errorHandler(statisticController.makeDataForStatMulti)
 );
 
+router.get("/phone/:surveyId", errorHandler(statisticController.getPhone));
+
 module.exports = {
   router,
 };

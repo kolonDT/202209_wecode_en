@@ -1,4 +1,4 @@
 -- migrate:up
 
 ALTER TABLE
-    images DROP FOREIGN KEY image_ibfk_1 -- migrate:down
+    images DROP FOREIGN KEY images_ibfk_1 -- migrate:down
