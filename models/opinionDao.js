@@ -16,10 +16,10 @@ const checkDuplicateParticipate = async (surveyId, phone) => {
         SELECT EXISTS (
             SELECT phone
             FROM opinion
-            WHERE opinion.phone = ?
+            WHERE opinion.phone = ? AND survey_id = ?
         )
         `,
-      [phone]
+      [phone, surveyId]
     );
     return Number(Object.values(result[0])[0]);
   }
@@ -39,7 +39,6 @@ const getPhone = async (surveyId) => {
 
 const setOpinion = async (surveyId, result, phone, agreement) => {
   const check = await checkDuplicateParticipate(surveyId, phone);
-  console.log(check);
   if (check) {
     throw new error("already_exist_phone_number", 400);
   }

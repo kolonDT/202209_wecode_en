@@ -146,6 +146,7 @@ const makeDataForStatMulti = async (surveyId) => {
         });
       }
       if (typeof temp1[val][0] === "object") {
+        console.log(bascket);
         data.push(bascket);
       }
     });
