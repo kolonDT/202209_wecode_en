@@ -43,7 +43,7 @@ const makeLink = async (
     landingUrl
   );
   const surveyId = (await editorDao.getSurveyId())[0].id;
-  const surveyLink = `http://localhost:3000/surveypage/${surveyId}`;
+  const surveyLink = `http://10.133.28.182:3000/surveypage/${surveyId}`;
   await editorDao.SetSurveyLink(surveyId, surveyLink);
   await deleteGarbageImage();
   return surveyLink;
