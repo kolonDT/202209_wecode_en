@@ -72,7 +72,6 @@ const getOptionList = async (
   limit
 ) => {
   try {
-    console.log(searchWord);
     return await database.query(
       `
       SELECT 
