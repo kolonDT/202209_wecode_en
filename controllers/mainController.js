@@ -16,7 +16,7 @@ const getList = async (req, res) => {
 const getOptionList = async (req, res) => {
   const adminPkId = req.decoded.id;
   const searchWord = req.query.search;
-  const filterWord = req.query.filter;
+  let filterWord = req.query.filter;
   const pageNo = Number(req.query.pageNo);
   const limit = Number(req.query.limit);
   if (!pageNo || !limit) {

@@ -21,6 +21,9 @@ const getOptionList = async (
   limit
 ) => {
   const startPageNo = pageNo * limit - limit;
+  if (filterWord === "전체") {
+    filterWord = "";
+  }
   const getOptionList = await mainDao.getOptionList(
     adminPkId,
     searchWord,
@@ -32,6 +35,9 @@ const getOptionList = async (
 };
 
 const getOptionCount = async (adminPkId, searchWord, filterWord) => {
+  if (filterWord === "전체") {
+    filterWord = "";
+  }
   const getOptionCount = await mainDao.getOptionCount(
     adminPkId,
     searchWord,
