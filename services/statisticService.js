@@ -108,26 +108,26 @@ const makeDataForStatMulti = async (surveyId) => {
       }
     });
   }
+
   const result = [];
+  let count = 1;
 
   const key = Object.keys(temp2);
   for (let val of key) {
     const ele = {};
     const data = [];
+
     temp2[val].forEach((element) => {
       const bascket = {};
       if (typeof temp1[val][0] === "object") {
         return;
       }
       bascket["name"] = element;
+      bascket["value"] = 0;
       temp1[val].forEach((value) => {
         if (typeof value !== "object") {
-          if (element === value && bascket["value"] === undefined) {
-            bascket["value"] = 1;
-          } else if (element === value) {
+          if (element === value) {
             bascket["value"] = bascket["value"] + 1;
-          } else {
-            bascket["value"] = 0;
           }
         }
       });
@@ -146,14 +146,14 @@ const makeDataForStatMulti = async (surveyId) => {
         });
       }
       if (typeof temp1[val][0] === "object") {
-        console.log(bascket);
         data.push(bascket);
       }
     });
-
+    ele["id"] = count;
     ele["question"] = val;
     ele["data"] = data;
     result.push(ele);
+    count++;
   }
   return result;
 };

@@ -21,6 +21,12 @@ router.get(
   errorHandler(editorController.imageSender)
 );
 
+router.delete(
+  "/survey/:surveyId",
+  validateToken,
+  errorHandler(editorController.deleteSurvey)
+);
+
 module.exports = {
   router,
 };

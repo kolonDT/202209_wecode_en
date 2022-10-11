@@ -147,6 +147,43 @@ const getImage = async (surveyId) => {
   }
 };
 
+const findGarbageImage = async () => {
+  return database.query(
+    `
+    SELECT img 
+    FROM images 
+    WHERE form_id IS NULL
+    `
+  );
+};
+
+const deleteGarbageImageRow = async () => {
+  database.query(
+    `
+    DELETE FROM images 
+    WHERE form_id IS NULL;
+    `
+  );
+};
+
+const deleteSurvey = async (surveyId) => {
+  await database.query(`
+    SET foreign_key_checks = 0;
+  `);
+  await database.query(
+    `
+  DELETE FROM survey 
+  WHERE id = ?;
+  `,
+    [surveyId]
+  );
+  await database.query(
+    `
+    SET foreign_key_checks = 1;
+    `
+  );
+};
+
 module.exports = {
   makeForm,
   getFormId,
@@ -155,4 +192,7 @@ module.exports = {
   SetSurveyLink,
   setImage,
   getImage,
+  findGarbageImage,
+  deleteGarbageImageRow,
+  deleteSurvey,
 };
