@@ -1,6 +1,5 @@
 const editorService = require("../services/editorService");
 const error = require("../middlewares/errorConstructor");
-
 const madeEditor = async (req, res) => {
   const regex = /\d{4}-\d{2}-\d{2}/;
   const adminPkId = req.decoded.id;
@@ -52,8 +51,15 @@ const imageSender = async (req, res) => {
   res.sendFile(`${absPath[0].img}`, () => {});
 };
 
+const deleteSurvey = async (req, res) => {
+  const { surveyId } = req.params;
+  await editorService.deleteSurvey(surveyId);
+  res.status(200).json({ message: "success" });
+};
+
 module.exports = {
   madeEditor,
   imageUploader,
   imageSender,
+  deleteSurvey,
 };

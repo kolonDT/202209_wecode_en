@@ -1,9 +1,25 @@
 const editorDao = require("../models/editorDao");
 const path = require("path");
+const fs = require("fs");
+
 const makeForm = async (formData) => {
   await editorDao.makeForm(formData);
   const formId = await editorDao.getFormId(formData);
   return formId[0].id;
+};
+
+const deleteGarbageImage = async () => {
+  const garbagePaths = await editorDao.findGarbageImage();
+
+  if (garbagePaths.length === 0) {
+    return;
+  } else {
+    garbagePaths.forEach((element) => {
+      const path = element["img"];
+      fs.unlink(path, () => {});
+    });
+    await editorDao.deleteGarbageImageRow();
+  }
 };
 
 const makeLink = async (
@@ -29,6 +45,7 @@ const makeLink = async (
   const surveyId = (await editorDao.getSurveyId())[0].id;
   const surveyLink = `http://localhost:3000/surveypage/${surveyId}`;
   await editorDao.SetSurveyLink(surveyId, surveyLink);
+  await deleteGarbageImage();
   return surveyLink;
 };
 
@@ -42,9 +59,14 @@ const getImage = async (surveyId) => {
   return imagePath;
 };
 
+const deleteSurvey = async (surveyId) => {
+  editorDao.deleteSurvey(surveyId);
+};
+
 module.exports = {
   makeForm,
   makeLink,
   setImage,
   getImage,
+  deleteSurvey,
 };

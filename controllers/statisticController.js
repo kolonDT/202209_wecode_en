@@ -17,7 +17,6 @@ const makeDataForStatSub = async (req, res) => {
 const makeDataForStatMulti = async (req, res) => {
   const { surveyId } = req.params;
   const result = await statisticService.makeDataForStatMulti(surveyId);
-  console.log(result[0].data);
   res.status(200).json(result);
 };
 
