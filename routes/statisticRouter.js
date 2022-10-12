@@ -26,7 +26,7 @@ router.get(
 router.get(
   "/phone/:surveyId",
   validateToken,
-  errorHandler(statisticController.getPhone)
+  errorHandler(statisticController.getPhoneAndName)
 );
 
 module.exports = {

@@ -26,18 +26,7 @@ const checkDuplicateParticipate = async (surveyId, phone) => {
   return 0;
 };
 
-const getPhone = async (surveyId) => {
-  return await database.query(
-    `
-    SELECT phone 
-    FROM opinion
-    WHERE surveyId = ?
-    `,
-    [surveyId]
-  );
-};
-
-const setOpinion = async (surveyId, result, phone, agreement) => {
+const setOpinion = async (surveyId, result, phone, agreement, name) => {
   const check = await checkDuplicateParticipate(surveyId, phone);
   if (check) {
     throw new error("already_exist_phone_number", 400);
@@ -49,15 +38,15 @@ const setOpinion = async (surveyId, result, phone, agreement) => {
             (survey_id, 
               result, 
               phone, 
-              agreement)
+              agreement,
+              name2)
         VALUES 
-            (?,?,?,?)
+            (?,?,?,?,?)
     `,
-    [surveyId, result, phone, agreement]
+    [surveyId, result, phone, agreement, name]
   );
 };
 
 module.exports = {
   setOpinion,
-  getPhone,
 };

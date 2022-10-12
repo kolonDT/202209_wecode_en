@@ -8,7 +8,8 @@ const setOpinion = async (surveyId, userData) => {
 
   const temp = JSON.parse(userData).filter(Boolean);
   let phone = null,
-    agreement = null;
+    agreement = null,
+    name = null;
   for (let val of temp) {
     if (Object.hasOwn(val, "phone")) {
       phone = val.phone;
@@ -16,8 +17,17 @@ const setOpinion = async (surveyId, userData) => {
     if (Object.hasOwn(val, "agreement")) {
       agreement = val.agreement;
     }
+    if (Object.hasOwn(val, "name")) {
+      name = val.name;
+    }
   }
-  return await opinionDao.setOpinion(surveyId, userData, phone, agreement);
+  return await opinionDao.setOpinion(
+    surveyId,
+    userData,
+    phone,
+    agreement,
+    name
+  );
 };
 
 module.exports = {
