@@ -48,6 +48,11 @@ const imageUploader = async (req, res) => {
 
 const imageSender = async (req, res) => {
   const absPath = await editorService.getImage(req.params.surveyId);
+
+  if (!absPath) {
+    throw new error("not_exist", 404);
+  }
+
   res.sendFile(`${absPath[0].img}`, () => {});
 };
 

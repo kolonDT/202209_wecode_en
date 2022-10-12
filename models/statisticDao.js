@@ -56,10 +56,10 @@ const setPhoneAndAgreement = async (phone, agreement) => {
   );
 };
 
-const getPhone = async (surveyId) => {
+const getPhoneAndName = async (surveyId) => {
   return await database.query(
     `
-    SELECT phone 
+    SELECT phone, name2 as name
     FROM opinion
     WHERE survey_id = ?
     `,
@@ -72,5 +72,5 @@ module.exports = {
   getOpinionResult,
   getFormDataForQuestion,
   setPhoneAndAgreement,
-  getPhone,
+  getPhoneAndName,
 };
