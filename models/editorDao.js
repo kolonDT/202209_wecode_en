@@ -143,7 +143,7 @@ const getImage = async (surveyId) => {
       [formId[0].form_id]
     );
   } catch (err) {
-    throw new error("image get failed", 500);
+    throw new error("failed", 404);
   }
 };
 

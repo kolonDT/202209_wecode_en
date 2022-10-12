@@ -1,5 +1,4 @@
 const statisticService = require("../services/statisticService");
-const error = require("../middlewares/errorConstructor");
 
 const countSumOfParticipation = async (req, res) => {
   const { surveyId } = req.params;
@@ -20,9 +19,9 @@ const makeDataForStatMulti = async (req, res) => {
   res.status(200).json(result);
 };
 
-const getPhone = async (req, res) => {
+const getPhoneAndName = async (req, res) => {
   const { surveyId } = req.params;
-  const result = await statisticService.getPhone(surveyId);
+  const result = await statisticService.getPhoneAndName(surveyId);
   res.status(200).json(result);
 };
 
@@ -30,5 +29,5 @@ module.exports = {
   countSumOfParticipation,
   makeDataForStatSub,
   makeDataForStatMulti,
-  getPhone,
+  getPhoneAndName,
 };

@@ -93,7 +93,6 @@ const makeDataForStatMulti = async (surveyId) => {
   const que = JSON.parse(questions[0].form_data).filter((val) => {
     return !Object.hasOwn(val, "file");
   });
-
   for (let i = 0; i < opinionArr.length; i++) {
     opinionArr[i].forEach((val, x) => {
       if (checkToMultiple(val)) {
@@ -158,16 +157,22 @@ const makeDataForStatMulti = async (surveyId) => {
   return result;
 };
 
-const getPhone = async (surveyId) => {
+const getPhoneAndName = async (surveyId) => {
   if (Object.is(Number(surveyId), NaN)) {
     throw new error(`surveyId: '${surveyId}', NOT_A_NUMBER`, 400);
   }
-  return await statisticDao.getPhone(surveyId);
+  const result = await statisticDao.getPhoneAndName(surveyId);
+
+  result.forEach((val, index) => {
+    val["id"] = index + 1;
+  });
+
+  return result;
 };
 
 module.exports = {
   countSumOfParticipation,
   makeDataForStatSub,
   makeDataForStatMulti,
-  getPhone,
+  getPhoneAndName,
 };
